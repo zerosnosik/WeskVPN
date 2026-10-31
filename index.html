@@ -1,253 +1,249 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeskVPN — Стабильный доступ в интернет</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Шрифт Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Анимации при скролле -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+    <title>WeskVPN — Быстро. Надежно. Стильно.</title>
     <style>
-        /* Глубокий графитовый фон */
-        body { font-family: 'Inter', sans-serif; background-color: #0A0A0A; color: #EDEDED; overflow-x: hidden; }
+        /* Шрифты и базовые настройки */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         
-        /* Едва заметное свечение на фоне (нейтральное) */
-        .bg-gradient {
-            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.03), transparent 60%);
-        }
-
-        /* Эффект матового стекла для карточек */
-        .glass {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body { 
+            background-color: #0d1117; /* Тёмно-серый премиум фон */
+            color: #c9d1d9; 
+            line-height: 1.6; 
+            overflow-x: hidden;
         }
         
-        .glass:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.03);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+        a { text-decoration: none; color: inherit; }
+        
+        /* Контейнер */
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+        /* Анимации */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
         }
 
-        /* Аккуратный скроллбар */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0A0A0A; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        .anim { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        /* Шапка */
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 20px 0; border-bottom: 1px solid #21262d; 
+            animation: fadeUp 0.8s ease-out;
+        }
+        .logo { font-size: 20px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: #3b82f6; } /* Синий акцент */
+        
+        .btn-small { 
+            background: transparent; color: #3b82f6; border: 1px solid #3b82f6; 
+            padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; 
+            transition: all 0.3s ease; 
+        }
+        .btn-small:hover { background: #3b82f6; color: #fff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+
+        /* Главный экран */
+        .hero { text-align: center; padding: 100px 0 80px; }
+        .hero h1 { 
+            font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; 
+            /* Синий градиент для шрифта */
+            background: linear-gradient(90deg, #fff, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 18px; color: #8b949e; max-width: 600px; margin: 0 auto 40px; }
+        
+        /* Кнопки */
+        .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        
+        .btn-main { 
+            background: #3b82f6; color: #fff; padding: 16px 32px; border-radius: 12px; 
+            font-weight: 600; font-size: 16px; transition: all 0.3s ease; 
+            animation: pulseGlow 2s infinite;
+        }
+        .btn-main:hover { background: #2563eb; transform: translateY(-3px); }
+        
+        .btn-outline { 
+            background: rgba(255,255,255,0.03); border: 1px solid #30363d; color: #c9d1d9; 
+            padding: 16px 32px; border-radius: 12px; font-weight: 600; font-size: 16px; 
+            transition: all 0.3s ease; 
+        }
+        .btn-outline:hover { background: #21262d; border-color: #8b949e; transform: translateY(-3px); }
+
+        /* Сетки */
+        .section-title { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 10px; text-align: center; }
+        .section-subtitle { text-align: center; color: #8b949e; margin-bottom: 40px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 80px; }
+        
+        /* Карточки */
+        .card { 
+            background: #161b22; border: 1px solid #30363d; padding: 32px; border-radius: 16px; 
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        /* Синее свечение при наведении */
+        .card:hover { 
+            transform: translateY(-5px); 
+            border-color: #3b82f6; 
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3); 
+        }
+        
+        .card h3 { font-size: 20px; color: #fff; margin-bottom: 12px; }
+        .card p { color: #8b949e; font-size: 15px; }
+
+        /* Тарифы */
+        .pricing-card { text-align: center; display: flex; flex-direction: column; }
+        .pricing-card.popular { 
+            border-color: #3b82f6; 
+            background: linear-gradient(180deg, rgba(59,130,246,0.1) 0%, #161b22 100%);
+        }
+        .badge { 
+            display: inline-block; background: #3b82f6; color: #fff; padding: 4px 12px; 
+            border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 16px; 
+            align-self: center;
+        }
+        .price { font-size: 40px; font-weight: 800; color: #fff; margin: 10px 0; }
+        .price span { font-size: 16px; color: #8b949e; font-weight: 400; }
+        
+        .features { list-style: none; margin: 24px 0; text-align: left; font-size: 14px; color: #c9d1d9; flex-grow: 1; }
+        .features li { margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .features li::before { content: "✓"; color: #3b82f6; font-weight: bold; font-size: 16px; }
+        
+        .btn-price { 
+            display: block; width: 100%; padding: 14px; border-radius: 8px; font-weight: 600; 
+            border: 1px solid #30363d; color: #fff; background: transparent; cursor: pointer; 
+            transition: all 0.3s ease; 
+        }
+        .btn-price:hover { background: #30363d; }
+        
+        .popular .btn-price { 
+            background: #3b82f6; color: #fff; border: none; 
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        .popular .btn-price:hover { background: #2563eb; box-shadow: 0 4px 25px rgba(59, 130, 246, 0.6); }
+
+        /* Подвал */
+        footer { border-top: 1px solid #21262d; padding: 40px 0; text-align: center; color: #8b949e; font-size: 14px; }
+        footer a { margin: 0 10px; transition: color 0.3s; }
+        footer a:hover { color: #3b82f6; }
+
+        /* Мобильная версия */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 38px; }
+            .hero { padding: 60px 0; }
+            .btn-group { flex-direction: column; }
+        }
     </style>
 </head>
-<body class="antialiased bg-gradient selection:bg-white/20 selection:text-white">
+<body>
 
-    <!-- НАВИГАЦИЯ -->
-    <nav class="fixed w-full z-50 top-0 border-b border-white/5 bg-[#0A0A0A]/80 backdrop-blur-md">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <!-- Иконка щита -->
-                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                <span class="text-xl font-bold tracking-tight text-white">WeskVPN</span>
+    <div class="container">
+        <!-- Шапка -->
+        <header>
+            <div class="logo">
+                <svg width="24" height="24" fill="none" stroke="#3b82f6" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                Wesk<span>VPN</span>
             </div>
-            <div class="hidden md:flex gap-6 text-sm text-gray-400 font-medium">
-                <a href="#features" class="hover:text-white transition-colors">Возможности</a>
-                <a href="#pricing" class="hover:text-white transition-colors">Тарифы</a>
-                <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
-            </div>
-            <a href="https://t.me/weskvpn_bot" class="bg-white text-black hover:bg-gray-200 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all">
-                Подключиться
-            </a>
-        </div>
-    </nav>
+            <a href="https://t.me/weskvpn_bot" class="btn-small">Войти в Telegram</a>
+        </header>
 
-    <!-- ГЛАВНЫЙ ЭКРАН (HERO) -->
-    <header class="relative min-h-screen flex items-center justify-center pt-20 px-6">
-        <div class="max-w-4xl text-center z-10" data-aos="fade-up" data-aos-duration="800">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-gray-300 mb-8">
-                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                Сервис работает стабильно
+        <!-- Главный экран -->
+        <section class="hero">
+            <h1 class="anim">Интернет без границ.</h1>
+            <p class="anim delay-1">WeskVPN — это быстрый и безопасный доступ к любимым сервисам. Мы только запустились, поэтому вкладываем все силы в качество и стабильность.</p>
+            <div class="btn-group anim delay-2">
+                <a href="https://t.me/weskvpn_bot" class="btn-main">Подключиться сейчас</a>
+                <a href="#pricing" class="btn-outline">Посмотреть тарифы</a>
             </div>
-            
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-[1.1] text-white">
-                Интернет, который<br>
-                <span class="text-gray-500">просто работает.</span>
-            </h1>
-            
-            <p class="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-normal leading-relaxed">
-                WeskVPN — это быстрый и безопасный доступ к любимым сервисам. Мы только запустились, поэтому вкладываем все силы в качество и стабильность.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://t.me/weskvpn_bot" class="w-full sm:w-auto bg-white text-black hover:bg-gray-200 px-8 py-3.5 rounded-xl font-semibold transition-all">
-                    Начать пользоваться
-                </a>
-                <a href="#pricing" class="w-full sm:w-auto glass text-white px-8 py-3.5 rounded-xl font-semibold transition-all">
-                    Посмотреть тарифы
-                </a>
+        </section>
+
+        <!-- Возможности -->
+        <h2 class="section-title anim delay-3">Почему WeskVPN?</h2>
+        <p class="section-subtitle anim delay-3">Мы сделали всё, чтобы вам было удобно</p>
+        
+        <div class="grid">
+            <div class="card anim delay-1">
+                <h3>⚡ Стабильная скорость</h3>
+                <p>Современное оборудование позволяет смотреть видео и играть без задержек. Никаких перегрузок по вечерам.</p>
+            </div>
+            <div class="card anim delay-2">
+                <h3>🔒 Защита данных</h3>
+                <p>Ваш трафик надежно зашифрован. Мы не собираем историю ваших посещений и не передаем данные третьим лицам.</p>
+            </div>
+            <div class="card anim delay-3">
+                <h3>📱 Удобное подключение</h3>
+                <p>Одна ссылка для всех устройств. Скопируйте её из бота и вставьте в приложение Happ или v2rayTun.</p>
             </div>
         </div>
-    </header>
 
-    <!-- ВОЗМОЖНОСТИ -->
-    <section id="features" class="py-24 relative z-10 border-t border-white/5">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Почему WeskVPN?</h2>
-                <p class="text-gray-400 text-lg">Мы сделали всё, чтобы вам было удобно.</p>
+        <!-- Тарифы -->
+        <h2 class="section-title" id="pricing">Тарифы</h2>
+        <p class="section-subtitle">Оплата картой РФ (СБП) или криптовалютой</p>
+        
+        <div class="grid">
+            <!-- 1 месяц -->
+            <div class="card pricing-card">
+                <h3>Старт</h3>
+                <p>На 1 месяц</p>
+                <div class="price">200 <span>₽</span></div>
+                <ul class="features">
+                    <li>Безлимитный трафик</li>
+                    <li>До 3 устройств</li>
+                    <li>Высокая скорость</li>
+                </ul>
+                <a href="https://t.me/weskvpn_bot" class="btn-price">Выбрать</a>
             </div>
-            
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- Карточка 1 -->
-                <div class="glass p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Стабильная скорость</h3>
-                    <p class="text-gray-400 leading-relaxed text-sm">Наши серверы используют современное оборудование, чтобы вы могли смотреть видео и играть без задержек.</p>
-                </div>
 
-                <!-- Карточка 2 -->
-                <div class="glass p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Защита данных</h3>
-                    <p class="text-gray-400 leading-relaxed text-sm">Ваш трафик надежно зашифрован. Мы не сохраняем историю ваших посещений и не передаем данные третьим лицам.</p>
-                </div>
-
-                <!-- Карточка 3 -->
-                <div class="glass p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Удобное подключение</h3>
-                    <p class="text-gray-400 leading-relaxed text-sm">Одна ссылка для всех устройств. Просто скопируйте её из бота и вставьте в приложение Happ или v2rayTun.</p>
-                </div>
+            <!-- 3 месяца -->
+            <div class="card pricing-card popular">
+                <div class="badge">Популярный выбор</div>
+                <h3>Оптимальный</h3>
+                <p>На 3 месяца</p>
+                <div class="price">500 <span>₽</span></div>
+                <ul class="features">
+                    <li>Безлимитный трафик</li>
+                    <li>До 3 устройств</li>
+                    <li>Выгода 15%</li>
+                </ul>
+                <a href="https://t.me/weskvpn_bot" class="btn-price">Купить сейчас</a>
             </div>
-        </div>
-    </section>
 
-    <!-- ТАРИФЫ -->
-    <section id="pricing" class="py-24 relative z-10 border-t border-white/5">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Тарифы</h2>
-                <p class="text-gray-400 text-lg">Оплата картой РФ (СБП) или криптовалютой</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-6 items-center">
-                <!-- 1 месяц -->
-                <div class="glass p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-lg font-semibold mb-2 text-gray-300">Старт</h3>
-                    <p class="text-sm text-gray-500 mb-6">На 1 месяц</p>
-                    <div class="text-4xl font-bold mb-8 text-white">200 <span class="text-lg text-gray-500 font-normal">₽</span></div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-400">
-                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Безлимитный трафик</li>
-                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> До 3 устройств</li>
-                    </ul>
-                    <a href="https://t.me/weskvpn_bot" class="block w-full py-3 rounded-xl border border-white/10 hover:bg-white/5 transition-all text-center font-medium text-white text-sm">Выбрать</a>
-                </div>
-
-                <!-- 3 месяца (Выделенный) -->
-                <div class="glass p-10 rounded-2xl border-white/20 relative shadow-[0_0_40px_rgba(255,255,255,0.05)] transform md:scale-105 bg-[#121212]" data-aos="fade-up" data-aos-delay="200">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-white text-black text-xs font-bold px-4 py-1.5 rounded-b-lg">Популярный выбор</div>
-                    <h3 class="text-lg font-semibold mb-2 text-white mt-2">Оптимальный</h3>
-                    <p class="text-sm text-gray-400 mb-6">На 3 месяца</p>
-                    <div class="text-5xl font-bold mb-8 text-white">500 <span class="text-lg text-gray-500 font-normal">₽</span></div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-300">
-                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Безлимитный трафик</li>
-                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> До 3 устройств</li>
-                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Выгода 15%</li>
-                    </ul>
-                    <a href="https://t.me/weskvpn_bot" class="block w-full py-3 rounded-xl bg-white text-black hover:bg-gray-200 transition-all text-center font-semibold text-sm">Купить сейчас</a>
-                </div>
-
-                <!-- 1 год -->
-                <div class="glass p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="text-lg font-semibold mb-2 text-gray-300">Максимум</h3>
-                    <p class="text-sm text-gray-500 mb-6">На 1 год</p>
-                    <div class="text-4xl font-bold mb-8 text-white">1500 <span class="text-lg text-gray-500 font-normal">₽</span></div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-400">
-                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Безлимитный трафик</li>
-                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> До 5 устройств</li>
-                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Выгода 40%</li>
-                    </ul>
-                    <a href="https://t.me/weskvpn_bot" class="block w-full py-3 rounded-xl border border-white/10 hover:bg-white/5 transition-all text-center font-medium text-white text-sm">Выбрать</a>
-                </div>
+            <!-- 1 год -->
+            <div class="card pricing-card">
+                <h3>Максимум</h3>
+                <p>На 1 год</p>
+                <div class="price">1500 <span>₽</span></div>
+                <ul class="features">
+                    <li>Безлимитный трафик</li>
+                    <li>До 5 устройств</li>
+                    <li>Выгода 40%</li>
+                </ul>
+                <a href="https://t.me/weskvpn_bot" class="btn-price">Выбрать</a>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- FAQ -->
-    <section id="faq" class="py-24 relative z-10 border-t border-white/5">
-        <div class="max-w-3xl mx-auto px-6">
-            <div class="text-center mb-12" data-aos="fade-up">
-                <h2 class="text-3xl font-bold mb-4">Частые вопросы</h2>
-            </div>
-            
-            <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
-                <details class="glass rounded-xl group cursor-pointer">
-                    <summary class="flex justify-between items-center p-5 font-medium list-none text-white">
-                        Как начать пользоваться?
-                        <span class="transition-transform group-open:rotate-180 text-gray-400">↓</span>
-                    </summary>
-                    <div class="px-5 pb-5 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
-                        Перейдите в нашего Telegram-бота, выберите тариф и оплатите удобным способом. Бот моментально выдаст вам персональную ссылку. Скачайте приложение Happ, вставьте ссылку — и всё готово.
-                    </div>
-                </details>
-                
-                <details class="glass rounded-xl group cursor-pointer">
-                    <summary class="flex justify-between items-center p-5 font-medium list-none text-white">
-                        На каких устройствах это работает?
-                        <span class="transition-transform group-open:rotate-180 text-gray-400">↓</span>
-                    </summary>
-                    <div class="px-5 pb-5 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
-                        Сервис работает на iOS, Android, Windows и macOS. Вы можете использовать одну подписку сразу на нескольких устройствах (в зависимости от тарифа).
-                    </div>
-                </details>
-
-                <details class="glass rounded-xl group cursor-pointer">
-                    <summary class="flex justify-between items-center p-5 font-medium list-none text-white">
-                        Что делать, если возникли вопросы?
-                        <span class="transition-transform group-open:rotate-180 text-gray-400">↓</span>
-                    </summary>
-                    <div class="px-5 pb-5 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
-                        Вы всегда можете обратиться в нашу службу поддержки в Telegram <a href="https://t.me/wesksupport" class="text-white underline decoration-white/30 hover:decoration-white">@wesksupport</a>. Мы обязательно поможем с настройкой.
-                    </div>
-                </details>
-            </div>
+    <!-- Подвал -->
+    <footer>
+        <div>
+            <a href="https://t.me/wesksupport">Поддержка</a>
+            <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-08-12-99">Конфиденциальность</a>
+            <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-08-12-15">Оферта</a>
         </div>
-    </section>
-
-    <!-- ПОДВАЛ -->
-    <footer class="border-t border-white/5 pt-12 pb-8 relative z-10 bg-[#0A0A0A]">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                <span class="font-bold text-white">WeskVPN</span>
-            </div>
-            
-            <div class="flex gap-6 text-sm text-gray-500">
-                <a href="https://t.me/wesksupport" class="hover:text-white transition-colors">Поддержка</a>
-                <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-08-12-99" class="hover:text-white transition-colors">Конфиденциальность</a>
-                <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-08-12-15" class="hover:text-white transition-colors">Оферта</a>
-            </div>
-            
-            <p class="text-gray-600 text-sm">© 2024 WeskVPN.</p>
-        </div>
+        <p style="margin-top: 20px;">© 2024 WeskVPN. Все права защищены.</p>
     </footer>
 
-    <!-- СКРИПТЫ -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({ once: true, duration: 800, offset: 50 });
-    </script>
 </body>
 </html>
