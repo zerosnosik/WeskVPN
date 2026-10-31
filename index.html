@@ -3,160 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeskVPN — Будущее уже здесь</title>
+    <title>WeskVPN — Будущее здесь</title>
     
-    <!-- Шрифты и Tailwind -->
+    <!-- Шрифты и CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
-        body { font-family: 'Space Grotesk', sans-serif; background-color: #030008; color: #fff; overflow-x: hidden; }
+        /* Базовые настройки */
+        body { font-family: 'Space Grotesk', sans-serif; background: #020005; color: #fff; overflow-x: hidden; cursor: none; }
+        h1, h2, h3, .font-tech { font-family: 'Orbitron', sans-serif; }
+
+        /* Кастомный курсор (Неоновый шар) */
+        .cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; background: #0ff; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; }
+        .cursor-blur { position: fixed; top: 0; left: 0; width: 60px; height: 60px; background: #8b5cf6; border-radius: 50%; filter: blur(20px); opacity: 0.5; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s; }
+        a:hover ~ .cursor, button:hover ~ .cursor { width: 30px; height: 30px; background: #8b5cf6; }
+
+        /* Канвас (фон с частицами) */
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; opacity: 0.6; }
+
+        /* Свечение текста */
+        .glow-text { text-shadow: 0 0 10px rgba(0,255,255,0.5), 0 0 20px rgba(0,255,255,0.3); }
         
-        /* Космический фон */
-        .space-bg {
-            background-image: radial-gradient(circle at 50% 0%, rgba(76, 29, 149, 0.3) 0%, transparent 50%),
-                              radial-gradient(circle at 100% 100%, rgba(6, 182, 212, 0.2) 0%, transparent 40%);
+        /* Градиентная кнопка с бесконечной анимацией */
+        .btn-super {
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899, #06b6d4);
+            background-size: 300% 100%;
+            animation: gradientMove 3s linear infinite;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
         }
+        .btn-super:hover { animation: gradientMove 1s linear infinite; box-shadow: 0 0 40px rgba(139, 92, 246, 0.8); transform: scale(1.05); }
+        @keyframes gradientMove { 0% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* Анимированный текст (переливается) */
-        .shimmer-text {
-            background: linear-gradient(90deg, #60A5FA, #A78BFA, #F472B6, #60A5FA);
-            background-size: 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 4s infinite linear;
-        }
-        @keyframes shimmer {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 300% 50%; }
-        }
+        /* Бегущая строка */
+        .marquee { display: flex; overflow: hidden; white-space: nowrap; }
+        .marquee-content { display: flex; animation: marquee 20s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Стекло */
-        .glass {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-top: 1px solid rgba(255, 255, 255, 0.15); /* Блик сверху */
-        }
-
-        /* Вращающаяся неоновая рамка для Хит-тарифа */
-        .neon-border {
-            position: relative;
-            background: #030008;
-            border-radius: 24px;
-            z-index: 1;
-        }
-        .neon-border::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            border-radius: 26px;
-            background: conic-gradient(from 0deg, #06b6d4, #8b5cf6, #ec4899, #06b6d4);
-            z-index: -1;
-            animation: spin 4s linear infinite;
-        }
+        /* Стекло и неон */
+        .glass { background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        .neon-border { position: relative; background: #0a0014; border-radius: 24px; z-index: 1; }
+        .neon-border::before { content: ""; position: absolute; inset: -2px; border-radius: 26px; background: conic-gradient(from 0deg, #0ff, #8b5cf6, #ec4899, #0ff); z-index: -1; animation: spin 4s linear infinite; filter: blur(4px); }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Свечение кнопки */
-        .glow-btn {
-            position: relative;
-            background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+        /* Мигающий курсор печатной машинки */
+        .type-cursor { display: inline-block; width: 3px; height: 1em; background: #0ff; animation: blink 1s step-end infinite; vertical-align: bottom; }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        /* Скрываем кастомный курсор на мобилках */
+        @media (max-width: 768px) {
+            body { cursor: auto; }
+            .cursor, .cursor-blur { display: none; }
         }
-        .glow-btn::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: inherit;
-            filter: blur(15px);
-            opacity: 0.7;
-            z-index: -1;
-            transition: opacity 0.3s;
-        }
-        .glow-btn:hover::after { opacity: 1; }
-
-        /* Кастомный скроллбар */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #030008; }
-        ::-webkit-scrollbar-thumb { background: #4c1d95; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
     </style>
 </head>
-<body class="antialiased space-bg selection:bg-purple-500/30">
+<body class="antialiased selection:bg-cyan-500/30">
+
+    <!-- Кастомный курсор -->
+    <div class="cursor"></div>
+    <div class="cursor-blur"></div>
+
+    <!-- Фон-канвас -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Бегущая строка сверху -->
+    <div class="bg-cyan-500/10 border-b border-cyan-500/20 text-cyan-400 text-xs font-tech font-bold tracking-widest py-2 relative z-50">
+        <div class="marquee">
+            <div class="marquee-content gap-10">
+                <span>⚡ МАКСИМАЛЬНАЯ СКОРОСТЬ</span> <span>🔒 100% АНОНИМНОСТЬ</span> <span>🚀 РАБОТАЕТ НА ВСЕХ УСТРОЙСТВАХ</span> <span>🌍 БЕЗ ГРАНИЦ</span> <span>💎 ПРЕМИУМ КАЧЕСТВО</span>
+                <span>⚡ МАКСИМАЛЬНАЯ СКОРОСТЬ</span> <span>🔒 100% АНОНИМНОСТЬ</span> <span>🚀 РАБОТАЕТ НА ВСЕХ УСТРОЙСТВАХ</span> <span>🌍 БЕЗ ГРАНИЦ</span> <span>💎 ПРЕМИУМ КАЧЕСТВО</span>
+            </div>
+        </div>
+    </div>
 
     <!-- НАВИГАЦИЯ -->
-    <nav class="fixed w-full z-50 top-0 border-b border-white/5 bg-[#030008]/60 backdrop-blur-xl">
+    <nav class="fixed w-full z-40 top-8 border-b border-white/5 bg-[#020005]/50 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded bg-gradient-to-tr from-cyan-400 to-purple-600 flex items-center justify-center font-bold text-sm">W</div>
-                <span class="text-xl font-bold tracking-widest uppercase">Wesk<span class="text-cyan-400">VPN</span></span>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-400 to-purple-600 flex items-center justify-center font-tech font-bold text-xl text-black shadow-[0_0_15px_rgba(6,182,212,0.5)]">W</div>
+                <span class="text-2xl font-tech font-bold tracking-widest">WESK<span class="text-cyan-400">VPN</span></span>
             </div>
-            <a href="https://t.me/weskvpn_bot" class="glass hover:bg-white/10 px-6 py-2.5 rounded-full text-sm font-semibold transition-all border-cyan-500/30 text-cyan-300">
-                Войти в Telegram
+            <a href="https://t.me/weskvpn_bot" class="glass hover:bg-white/10 px-6 py-2.5 rounded-full font-tech text-sm transition-all border-cyan-500/30 text-cyan-300">
+                Открыть Бот
             </a>
         </div>
     </nav>
 
     <!-- ГЛАВНЫЙ ЭКРАН -->
-    <header class="relative min-h-screen flex items-center justify-center pt-20 px-6">
-        <!-- Светящиеся шары на фоне -->
-        <div class="absolute top-1/3 left-1/4 w-96 h-96 bg-cyan-600/20 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
-        <div class="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none animate-pulse" style="animation-delay: 2s;"></div>
-
-        <div class="max-w-5xl text-center z-10" data-aos="zoom-in" data-aos-duration="1000">
-            <div class="inline-block glass px-4 py-1.5 rounded-full text-xs font-semibold mb-8 text-cyan-400 border-cyan-500/30">
-                🚀 ТЕХНОЛОГИЯ НОВОГО ПОКОЛЕНИЯ
+    <header class="relative min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="max-w-5xl text-center z-10" data-aos="zoom-in" data-aos-duration="1200">
+            <div class="inline-block glass px-4 py-1.5 rounded-full text-xs font-tech mb-8 text-purple-400 border-purple-500/30">
+                [ СИСТЕМА АКТИВИРОВАНА ]
             </div>
             
-            <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tighter leading-none">
-                Скорость.<br>
-                <span class="shimmer-text">Свобода. Анонимность.</span>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-tech font-bold mb-8 tracking-tighter leading-tight glow-text">
+                Твой интернет<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">
+                    <span id="typed-text"></span><span class="type-cursor"></span>
+                </span>
             </h1>
             
-            <p class="text-gray-400 text-lg md:text-2xl mb-12 max-w-3xl mx-auto font-light tracking-wide">
-                Забудь про ограничения. WeskVPN — это молниеносный интернет на всех твоих устройствах. Одна ссылка. Ноль настроек.
+            <p class="text-gray-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-light tracking-wide">
+                Перестань мириться с медленным интернетом. WeskVPN — это технология VLESS, гигабитная скорость и полная анонимность в один клик.
             </p>
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <a href="https://t.me/weskvpn_bot" class="glow-btn w-full sm:w-auto px-10 py-4 rounded-xl font-bold text-white text-lg transition-transform hover:scale-105 flex items-center justify-center gap-2">
-                    Начать работу
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <a href="https://t.me/weskvpn_bot" class="btn-super w-full sm:w-auto px-10 py-4 rounded-xl font-tech font-bold text-white text-lg transition-transform flex items-center justify-center gap-3">
+                    ПОДКЛЮЧИТЬСЯ
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </a>
-                <a href="#pricing" class="glass w-full sm:w-auto px-10 py-4 rounded-xl font-bold text-white hover:bg-white/5 transition-all text-lg">
-                    Выбрать тариф
+                <a href="#pricing" class="glass w-full sm:w-auto px-10 py-4 rounded-xl font-tech text-white hover:bg-white/10 transition-all border-white/20">
+                    ТАРИФЫ
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- 3D КАРТОЧКИ ПРЕИМУЩЕСТВ -->
+    <!-- 3D КАРТОЧКИ -->
     <section class="py-32 relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-20" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Почувствуй разницу</h2>
-                <p class="text-gray-400 text-lg">Наведи мышкой на карточки (на ПК)</p>
+                <h2 class="text-4xl md:text-5xl font-tech font-bold mb-4">ТЕХНОЛОГИИ БУДУЩЕГО</h2>
+                <p class="text-cyan-400 font-tech text-sm tracking-widest">НАВЕДИ КУРСОР</p>
             </div>
             
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Карточка 1 (с эффектом 3D) -->
-                <div class="glass p-10 rounded-3xl" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-aos="fade-up" data-aos-delay="100">
-                    <div class="text-5xl mb-6">⚡</div>
-                    <h3 class="text-2xl font-bold mb-4">Гигабитная скорость</h3>
-                    <p class="text-gray-400">Наши сервера выдают до 1 Гбит/с. Смотри 4K видео и качай файлы без единой задержки.</p>
+                <!-- Карточка 1 -->
+                <div class="glass p-10 rounded-3xl border border-white/5" data-tilt data-tilt-glare data-tilt-max-glare="0.4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-5xl mb-6 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]">⚡</div>
+                    <h3 class="text-2xl font-tech font-bold mb-4 text-cyan-300">ГИГАБИТ</h3>
+                    <p class="text-gray-400">Скорость до 1 Гбит/с. Смотри 4K без буферизации. Скачивай файлы мгновенно. Играй без пинга.</p>
                 </div>
 
-                <!-- Карточка 2 (с эффектом 3D) -->
-                <div class="glass p-10 rounded-3xl" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-aos="fade-up" data-aos-delay="200">
-                    <div class="text-5xl mb-6">🔒</div>
-                    <h3 class="text-2xl font-bold mb-4">Абсолютная защита</h3>
-                    <p class="text-gray-400">Протокол VLESS и полное отсутствие логов. Твой провайдер не узнает, какие сайты ты посещаешь.</p>
+                <!-- Карточка 2 -->
+                <div class="glass p-10 rounded-3xl border border-white/5" data-tilt data-tilt-glare data-tilt-max-glare="0.4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-5xl mb-6 drop-shadow-[0_0_15px_rgba(139,92,246,0.8)]">🛡️</div>
+                    <h3 class="text-2xl font-tech font-bold mb-4 text-purple-400">НЕУЯЗВИМОСТЬ</h3>
+                    <p class="text-gray-400">Шифрование военного уровня. Твой провайдер видит только поток случайных данных. Полный ноль логов.</p>
                 </div>
 
-                <!-- Карточка 3 (с эффектом 3D) -->
-                <div class="glass p-10 rounded-3xl" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-aos="fade-up" data-aos-delay="300">
-                    <div class="text-5xl mb-6">📱</div>
-                    <h3 class="text-2xl font-bold mb-4">Для всех устройств</h3>
-                    <p class="text-gray-400">iOS, Android, Windows, Mac. Одна подписка на всю семью. Подключай до 5 гаджетов одновременно.</p>
+                <!-- Карточка 3 -->
+                <div class="glass p-10 rounded-3xl border border-white/5" data-tilt data-tilt-glare data-tilt-max-glare="0.4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-5xl mb-6 drop-shadow-[0_0_15px_rgba(236,72,153,0.8)]">📱</div>
+                    <h3 class="text-2xl font-tech font-bold mb-4 text-pink-400">МУЛЬТИПЛАТФОРМА</h3>
+                    <p class="text-gray-400">Одна ссылка для iPhone, Android, Windows и Mac. Подключай до 5 устройств одной подпиской.</p>
                 </div>
             </div>
         </div>
@@ -166,86 +157,168 @@
     <section id="pricing" class="py-24 relative z-10">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-20" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Выбери свой уровень</h2>
-                <p class="text-gray-400 text-lg">Оплата СБП или криптовалютой</p>
+                <h2 class="text-4xl md:text-5xl font-tech font-bold mb-4">ВЫБЕРИ СВОЙ ПЛАН</h2>
+                <p class="text-gray-400 text-lg">Оплата СБП или Криптовалютой</p>
             </div>
             
             <div class="grid md:grid-cols-3 gap-8 items-center">
                 <!-- 1 месяц -->
                 <div class="glass rounded-3xl p-8 border-white/5" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-xl text-gray-300 mb-2">Старт</h3>
-                    <div class="text-4xl font-bold mb-8">200 <span class="text-lg text-gray-500 font-normal">₽</span></div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-400">
-                        <li>✔️ 1 месяц доступа</li>
-                        <li>✔️ До 3 устройств</li>
-                        <li>✔️ Безлимитный трафик</li>
+                    <h3 class="text-xl font-tech text-gray-300 mb-2">СТАРТ</h3>
+                    <div class="text-4xl font-tech font-bold mb-8">200 <span class="text-lg text-gray-500 font-normal">₽</span></div>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-400 font-light">
+                        <li>✓ 1 месяц доступа</li>
+                        <li>✓ До 3 устройств</li>
+                        <li>✓ Безлимит</li>
                     </ul>
-                    <a href="https://t.me/weskvpn_bot" class="block w-full py-4 rounded-xl border border-white/10 hover:bg-white/5 text-center font-semibold transition-all">Выбрать</a>
+                    <a href="https://t.me/weskvpn_bot" class="block w-full py-4 rounded-xl border border-white/10 hover:bg-white/5 text-center font-tech transition-all">ВЫБРАТЬ</a>
                 </div>
 
-                <!-- 3 месяца (Neon Border) -->
-                <div class="neon-border p-8 transform md:scale-105 shadow-[0_0_50px_rgba(139,92,246,0.3)]" data-aos="fade-up" data-aos-delay="200">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-purple-600 text-white text-xs font-bold px-4 py-1.5 rounded-b-lg uppercase tracking-widest">Хит</div>
-                    <h3 class="text-xl text-purple-300 mb-2 mt-2">Оптимальный</h3>
-                    <div class="text-5xl font-bold mb-8">500 <span class="text-lg text-gray-500 font-normal">₽</span></div>
+                <!-- 3 месяца (Neon) -->
+                <div class="neon-border p-8 transform md:scale-105 shadow-[0_0_60px_rgba(139,92,246,0.4)]" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-purple-600 text-white text-xs font-tech font-bold px-6 py-1.5 rounded-b-lg tracking-widest uppercase shadow-lg">ХИТ ПРОДАЖ</div>
+                    <h3 class="text-xl font-tech text-purple-300 mb-2 mt-4">ОПТИМАЛЬНЫЙ</h3>
+                    <div class="text-5xl font-tech font-bold mb-8">500 <span class="text-lg text-gray-500 font-normal">₽</span></div>
                     <ul class="space-y-4 mb-8 text-sm text-gray-200">
-                        <li>✔️ 3 месяца доступа</li>
-                        <li>✔️ До 3 устройств</li>
-                        <li>✔️ Выгода 15%</li>
-                        <li>✔️ Приоритетная поддержка</li>
+                        <li>✓ 3 месяца доступа</li>
+                        <li>✓ До 3 устройств</li>
+                        <li>✓ Выгода 15%</li>
+                        <li>✓ Приоритетная поддержка</li>
                     </ul>
-                    <a href="https://t.me/weskvpn_bot" class="glow-btn block w-full py-4 rounded-xl text-center font-bold text-white transition-transform hover:scale-105">Купить сейчас</a>
+                    <a href="https://t.me/weskvpn_bot" class="btn-super block w-full py-4 rounded-xl text-center font-tech font-bold text-white transition-transform hover:scale-105">КУПИТЬ</a>
                 </div>
 
                 <!-- 1 год -->
                 <div class="glass rounded-3xl p-8 border-white/5" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="text-xl text-gray-300 mb-2">Максимум</h3>
-                    <div class="text-4xl font-bold mb-8">1500 <span class="text-lg text-gray-500 font-normal">₽</span></div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-400">
-                        <li>✔️ 1 год доступа</li>
-                        <li>✔️ До 5 устройств</li>
-                        <li>✔️ Выгода 40%</li>
+                    <h3 class="text-xl font-tech text-gray-300 mb-2">МАКСИМУМ</h3>
+                    <div class="text-4xl font-tech font-bold mb-8">1500 <span class="text-lg text-gray-500 font-normal">₽</span></div>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-400 font-light">
+                        <li>✓ 1 год доступа</li>
+                        <li>✓ До 5 устройств</li>
+                        <li>✓ Выгода 40%</li>
                     </ul>
-                    <a href="https://t.me/weskvpn_bot" class="block w-full py-4 rounded-xl border border-white/10 hover:bg-white/5 text-center font-semibold transition-all">Выбрать</a>
+                    <a href="https://t.me/weskvpn_bot" class="block w-full py-4 rounded-xl border border-white/10 hover:bg-white/5 text-center font-tech transition-all">ВЫБРАТЬ</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ПОДВАЛ -->
-    <footer class="border-t border-white/10 pt-16 pb-8 relative z-10 bg-black/40">
+    <footer class="border-t border-white/10 pt-16 pb-8 relative z-10 bg-black/60">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <div class="text-2xl font-bold tracking-widest uppercase mb-4">Wesk<span class="text-cyan-400">VPN</span></div>
-            <p class="text-gray-500 mb-8 max-w-md mx-auto">Будущее доступа к информации. Мы делаем интернет быстрым и безопасным.</p>
+            <div class="text-3xl font-tech font-bold tracking-widest uppercase mb-4 text-white">WESK<span class="text-cyan-400">VPN</span></div>
+            <p class="text-gray-500 mb-8 max-w-md mx-auto font-light">Мы делаем интернет быстрым, безопасным и доступным каждому.</p>
             
-            <div class="flex justify-center gap-8 text-sm text-gray-400 mb-8">
-                <a href="https://t.me/wesksupport" class="hover:text-cyan-400 transition-colors">Поддержка</a>
-                <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-08-12-99" class="hover:text-cyan-400 transition-colors">Конфиденциальность</a>
-                <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-08-12-15" class="hover:text-cyan-400 transition-colors">Оферта</a>
+            <div class="flex justify-center gap-8 text-sm font-tech text-gray-400 mb-8">
+                <a href="https://t.me/wesksupport" class="hover:text-cyan-400 transition-colors">ПОДДЕРЖКА</a>
+                <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-08-12-99" class="hover:text-cyan-400 transition-colors">КОНФИДЕНЦИАЛЬНОСТЬ</a>
+                <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-08-12-15" class="hover:text-cyan-400 transition-colors">ОФЕРТА</a>
             </div>
             
-            <p class="text-gray-600 text-xs">© 2024 WeskVPN. Все права защищены.</p>
+            <p class="text-gray-600 text-xs font-tech">© 2024 WESKVPN. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
         </div>
     </footer>
 
-    <!-- СКРИПТЫ -->
+    <!-- БИБЛИОТЕКИ -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- Библиотека для 3D-эффекта карточек -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     
     <script>
-        // Инициализация анимаций
+        // 1. Инициализация AOS
         AOS.init({ once: true, duration: 800 });
 
-        // Инициализация 3D-эффекта для карточек (только на ПК, чтобы не лагало на телефонах)
+        // 2. Инициализация 3D наклона
         if (window.innerWidth > 768) {
             VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-                max: 15,     // Максимальный угол наклона
-                speed: 400,  // Скорость реакции
-                glare: true, // Блик от света
-                "max-glare": 0.2
+                max: 20,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.4
             });
         }
+
+        // 3. Печатная машинка
+        new Typed('#typed-text', {
+            strings: ['Без границ.', 'Без тормозов.', 'Без страха.'],
+            typeSpeed: 70,
+            backSpeed: 50,
+            loop: true
+        });
+
+        // 4. Кастомный курсор
+        const cursor = document.querySelector('.cursor');
+        const cursorBlur = document.querySelector('.cursor-blur');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            // Задержка для размытого шара
+            setTimeout(() => {
+                cursorBlur.style.left = e.clientX + 'px';
+                cursorBlur.style.top = e.clientY + 'px';
+            }, 50);
+        });
+
+        // 5. Фон с частицами (Канвас)
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(6, 182, 212, 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            
+            // Линии между частицами
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.strokeStyle = `rgba(139, 92, 246, ${1 - dist/120})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
     </script>
 </body>
 </html>
