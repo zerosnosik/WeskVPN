@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WeskVPN — Быстро. Надежно. Стильно.</title>
     <style>
-        /* Шрифты */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
         body { 
-            background-color: #0A0A0A; /* Глубокий графит */
+            background-color: #0A0A0A; 
             color: #A1A1AA; 
             line-height: 1.6; 
             overflow-x: hidden;
@@ -19,7 +18,7 @@
         
         a { text-decoration: none; color: inherit; }
 
-        /* Сетка на фоне (как у Stripe) */
+        /* Фоновая сетка */
         .bg-grid {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: 
@@ -31,26 +30,19 @@
             z-index: -1;
         }
 
-        /* Свечение на фоне */
+        /* Свечения на фоне */
         .glow-blob {
             position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.15; z-index: -1;
         }
 
-        /* Контейнер */
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
 
         /* Шапка */
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.05); 
-        }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .logo { font-size: 22px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; }
         .logo svg { color: #3B82F6; }
         
-        .btn-nav { 
-            background: #FFF; color: #000; padding: 10px 24px; border-radius: 8px; 
-            font-weight: 600; font-size: 14px; transition: all 0.3s; 
-        }
+        .btn-nav { background: #FFF; color: #000; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; transition: all 0.3s; }
         .btn-nav:hover { background: #E4E4E7; transform: translateY(-1px); }
 
         /* Главный экран */
@@ -58,12 +50,11 @@
         .hero-badge {
             display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px;
             background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 20px; color: #60A5FA; font-size: 13px; font-weight: 600;
-            margin-bottom: 24px;
+            border-radius: 20px; color: #60A5FA; font-size: 13px; font-weight: 600; margin-bottom: 24px;
         }
         .hero-badge span { width: 8px; height: 8px; background: #3B82F6; border-radius: 50%; }
 
-        /* ПЕРЕЛИВАЮЩИЙСЯ ТЕКСТ */
+        /* Переливающийся текст */
         .shimmer-text {
             font-size: 64px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -2px;
             background: linear-gradient(90deg, #FFFFFF 0%, #60A5FA 30%, #A78BFA 70%, #FFFFFF 100%);
@@ -72,26 +63,20 @@
             -webkit-text-fill-color: transparent;
             animation: shimmer 4s linear infinite;
         }
-        @keyframes shimmer {
-            to { background-position: 200% center; }
-        }
+        @keyframes shimmer { to { background-position: 200% center; } }
 
         .hero p { font-size: 18px; color: #A1A1AA; max-width: 650px; margin: 0 auto 40px; }
 
         /* Кнопки */
         .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-        
         .btn-main { 
-            background: #3B82F6; color: #FFF; padding: 16px 36px; border-radius: 12px; 
-            font-weight: 600; font-size: 16px; transition: all 0.3s ease; 
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            background: #3B82F6; color: #FFF; padding: 16px 36px; border-radius: 12px; font-weight: 600; font-size: 16px; 
+            transition: all 0.3s ease; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
         }
         .btn-main:hover { background: #2563EB; transform: translateY(-2px); box-shadow: 0 0 30px rgba(59, 130, 246, 0.5); }
-        
         .btn-outline { 
             background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #FFF; 
-            padding: 16px 36px; border-radius: 12px; font-weight: 600; font-size: 16px; 
-            transition: all 0.3s ease; 
+            padding: 16px 36px; border-radius: 12px; font-weight: 600; font-size: 16px; transition: all 0.3s ease; 
         }
         .btn-outline:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
 
@@ -101,23 +86,17 @@
 
         /* Карточки */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 100px; }
-        
         .card { 
             background: rgba(20, 20, 22, 0.8); border: 1px solid rgba(255,255,255,0.06); 
-            padding: 40px 30px; border-radius: 20px; transition: all 0.3s; position: relative;
-            backdrop-filter: blur(10px);
+            padding: 40px 30px; border-radius: 20px; transition: all 0.3s; backdrop-filter: blur(10px);
         }
-        .card:hover { 
-            transform: translateY(-5px); border-color: rgba(59, 130, 246, 0.3); 
-            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15);
-        }
+        .card:hover { transform: translateY(-5px); border-color: rgba(59, 130, 246, 0.3); box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15); }
         .card-icon { font-size: 32px; margin-bottom: 20px; }
         .card h3 { font-size: 20px; color: #FFF; margin-bottom: 12px; font-weight: 700; }
         .card p { font-size: 15px; color: #A1A1AA; }
 
-        /* Как это работает (Шаги) */
+        /* Шаги */
         .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 100px; }
-        .step { position: relative; }
         .step-num { 
             width: 40px; height: 40px; background: #1A1A1E; border: 1px solid #3B82F6; color: #60A5FA;
             display: flex; align-items: center; justify-content: center; border-radius: 10px; 
@@ -130,8 +109,7 @@
         .pricing-card { text-align: center; display: flex; flex-direction: column; }
         .pricing-card.popular { 
             border-color: #3B82F6; background: linear-gradient(180deg, rgba(59,130,246,0.08) 0%, rgba(20,20,22,0.8) 100%);
-            transform: scale(1.02);
-            z-index: 2;
+            transform: scale(1.02); z-index: 2;
         }
         .badge { 
             display: inline-block; background: #3B82F6; color: #FFF; padding: 6px 16px; 
@@ -139,31 +117,21 @@
         }
         .price { font-size: 48px; font-weight: 800; color: #FFF; margin: 10px 0; }
         .price span { font-size: 16px; color: #A1A1AA; font-weight: 400; }
-        
         .features { list-style: none; margin: 24px 0; text-align: left; font-size: 15px; flex-grow: 1; }
         .features li { margin-bottom: 14px; display: flex; align-items: center; gap: 10px; color: #D4D4D8; }
         .features li::before { content: "✓"; color: #3B82F6; font-weight: bold; font-size: 18px; }
-        
         .btn-price { 
             display: block; width: 100%; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 15px;
-            border: 1px solid rgba(255,255,255,0.1); color: #FFF; background: transparent; cursor: pointer; 
-            transition: all 0.3s; 
+            border: 1px solid rgba(255,255,255,0.1); color: #FFF; background: transparent; cursor: pointer; transition: all 0.3s; 
         }
         .btn-price:hover { background: rgba(255,255,255,0.1); }
-        
         .popular .btn-price { background: #3B82F6; color: #FFF; border: none; }
         .popular .btn-price:hover { background: #2563EB; box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
 
         /* FAQ */
         .faq-section { max-width: 800px; margin: 0 auto 100px; }
-        details { 
-            background: rgba(20, 20, 22, 0.8); border: 1px solid rgba(255,255,255,0.06); 
-            border-radius: 16px; margin-bottom: 16px; overflow: hidden; 
-        }
-        summary { 
-            padding: 24px; font-weight: 600; color: #FFF; cursor: pointer; list-style: none; 
-            display: flex; justify-content: space-between; align-items: center; font-size: 16px;
-        }
+        details { background: rgba(20, 20, 22, 0.8); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; margin-bottom: 16px; overflow: hidden; }
+        summary { padding: 24px; font-weight: 600; color: #FFF; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 16px; }
         summary::-webkit-details-marker { display: none; }
         summary::after { content: "+"; color: #3B82F6; font-size: 24px; font-weight: 400; transition: 0.3s; }
         details[open] summary::after { transform: rotate(45deg); }
@@ -174,7 +142,6 @@
         footer a { color: #A1A1AA; margin: 0 12px; transition: color 0.3s; }
         footer a:hover { color: #FFF; }
 
-        /* Мобильная адаптация */
         @media (max-width: 768px) {
             .shimmer-text { font-size: 42px; }
             .hero { padding: 80px 0 60px; }
@@ -182,7 +149,6 @@
             .pricing-card.popular { transform: scale(1); }
         }
 
-        /* Анимация появления при загрузке */
         .fade-up { opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards; }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
         .d-1 { animation-delay: 0.1s; }
@@ -192,13 +158,11 @@
 </head>
 <body>
 
-    <!-- Фоновые эффекты -->
     <div class="bg-grid"></div>
     <div class="glow-blob" style="background: #3B82F6; width: 500px; height: 500px; top: -100px; left: 10%;"></div>
     <div class="glow-blob" style="background: #8B5CF6; width: 400px; height: 400px; top: 200px; right: 10%;"></div>
 
     <div class="container">
-        <!-- Шапка -->
         <header class="fade-up">
             <div class="logo">
                 <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
@@ -207,7 +171,6 @@
             <a href="https://t.me/weskvpn_bot" class="btn-nav">Открыть в Telegram</a>
         </header>
 
-        <!-- Главный экран -->
         <section class="hero">
             <div class="hero-badge fade-up d-1"><span></span> Сервис работает стабильно</div>
             <h1 class="shimmer-text fade-up d-1">Интернет<br>без границ.</h1>
@@ -218,7 +181,6 @@
             </div>
         </section>
 
-        <!-- Преимущества -->
         <h2 class="section-title fade-up">Почему WeskVPN?</h2>
         <p class="section-desc fade-up">Честный подход к каждому клиенту</p>
         
@@ -235,12 +197,11 @@
             </div>
             <div class="card fade-up d-3">
                 <div class="card-icon">📱</div>
-                <h3>Удобство</h3>
-                <p>Одна ссылка для всех устройств. Скопируйте её из бота и вставьте в приложение Happ или v2rayTun.</p>
+                <h3>Удобство и 5 устройств</h3>
+                <p>Одна ссылка для всех гаджетов. В <b>каждую</b> подписку включено подключение <b>до 5 устройств</b> одновременно.</p>
             </div>
         </div>
 
-        <!-- Как это работает -->
         <h2 class="section-title fade-up">Как подключиться?</h2>
         <p class="section-desc fade-up">Займет не больше 1 минуты</p>
 
@@ -258,29 +219,26 @@
             <div class="step fade-up d-3">
                 <div class="step-num">3</div>
                 <h3>Подключитесь</h3>
-                <p>Скопируйте ссылку и добавьте её в приложение. Наслаждайтесь свободой.</p>
+                <p>Скопируйте ссылку и добавьте её в приложение Happ. Наслаждайтесь свободой.</p>
             </div>
         </div>
 
-        <!-- Тарифы -->
         <h2 class="section-title fade-up" id="pricing">Тарифы</h2>
         <p class="section-desc fade-up">Прозрачные цены без скрытых платежей</p>
         
         <div class="grid">
-            <!-- Старт -->
             <div class="card pricing-card fade-up d-1">
                 <h3>Старт</h3>
                 <p>На 1 месяц</p>
                 <div class="price">200 <span>₽</span></div>
                 <ul class="features">
                     <li>Безлимитный трафик</li>
-                    <li>До 3 устройств</li>
+                    <li><b>До 5 устройств</b></li>
                     <li>Высокая скорость</li>
                 </ul>
                 <a href="https://t.me/weskvpn_bot" class="btn-price">Выбрать</a>
             </div>
 
-            <!-- Оптимальный -->
             <div class="card pricing-card popular fade-up d-2">
                 <div class="badge">Популярный</div>
                 <h3>Оптимальный</h3>
@@ -288,41 +246,39 @@
                 <div class="price">500 <span>₽</span></div>
                 <ul class="features">
                     <li>Безлимитный трафик</li>
-                    <li>До 3 устройств</li>
+                    <li><b>До 5 устройств</b></li>
                     <li>Выгода 15%</li>
                 </ul>
                 <a href="https://t.me/weskvpn_bot" class="btn-price">Купить сейчас</a>
             </div>
 
-            <!-- Максимум -->
             <div class="card pricing-card fade-up d-3">
                 <h3>Максимум</h3>
                 <p>На 1 год</p>
                 <div class="price">1500 <span>₽</span></div>
                 <ul class="features">
                     <li>Безлимитный трафик</li>
-                    <li>До 5 устройств</li>
+                    <li><b>До 5 устройств</b></li>
                     <li>Выгода 40%</li>
                 </ul>
                 <a href="https://t.me/weskvpn_bot" class="btn-price">Выбрать</a>
             </div>
         </div>
 
-        <!-- FAQ -->
         <h2 class="section-title fade-up">Частые вопросы</h2>
         <p class="section-desc fade-up">Ответы на то, что спрашивают чаще всего</p>
 
         <div class="faq-section">
             <details class="fade-up d-1">
-                <summary>Как начать пользоваться сервисом?</summary>
+                <summary>Сколько устройств можно подключить?</summary>
                 <div class="faq-content">
-                    Перейдите в нашего Telegram-бота, выберите подходящий тариф и оплатите его. Бот моментально выдаст вам персональную ссылку. Скачайте приложение Happ, вставьте ссылку — и всё готово.
+                    В <b>каждый</b> наш тариф уже включена возможность подключить <b>до 5 устройств</b> одновременно. Это может быть телефон, ноутбук, планшет и т.д. на одной подписке.
                 </div>
             </details>
             <details class="fade-up d-2">
-                <summary>На каких устройствах это работает?</summary>
+                <summary>Как начать пользоваться сервисом?</summary>
                 <div class="faq-content">
-                    Сервис работает на iOS (iPhone/iPad), Android, Windows и macOS. Вы можете использовать одну подписку сразу на нескольких устройствах (в зависимости от тарифа).
+                    Перейдите в нашего Telegram-бота, выберите подходящий тариф и оплатите его. Бот моментально выдаст вам персональную ссылку. Скачайте приложение Happ, вставьте ссылку — и всё готово.
                 </div>
             </details>
             <details class="fade-up d-3">
@@ -334,7 +290,6 @@
         </div>
     </div>
 
-    <!-- Подвал -->
     <footer>
         <div>
             <a href="https://t.me/wesksupport">Поддержка</a>
